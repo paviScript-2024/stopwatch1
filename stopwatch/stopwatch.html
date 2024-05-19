@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <link rel="stylesheet" href="./stopwatch.css">
+</head>
+
+<body>
+    <p>hello</p>
+    <section>
+        <div class="2xl:container m-[50px]">
+            <div class="watch">
+                <div class="outer-circle">
+                    <div class="inner-circle">
+                        <span class="text minute">00:</span>
+                        <span class="text second">00:</span>
+                        <span class="text centisecond">00</span>
+                    </div>
+                </div>
+                <div class="button-wrapper">
+                    <button class="button reset hidden">Reset</button>
+                    <button class="button start">Start</button>
+                    <button class="button lap hidden">Lap</button>
+                </div>
+            </div>
+            <ul class="laps">
+               
+            </ul>
+            <button class="lap-clear-button hidden">Clear All Laps</button>
+        </div>
+    </section>
+    <script>
+        const startButton = document.querySelector('.start');
+        const lapButton = document.querySelector('.lap');
+        const resetButton = document.querySelector('.reset');
+        const lapsList = document.querySelector('.laps');
+        const clearLapsButton = document.querySelector('.lap-clear-button');
+        const minuteDisplay = document.querySelector('.minute');
+        const secondDisplay = document.querySelector('.second');
+        const centisecondDisplay = document.querySelector('.centisecond');
+
+        let timerInterval;
+        let centiseconds = 0;
+        let seconds = 0;
+        let minutes = 0;
+        let isRunning = false;
+        let lapCount = 1;
+
+        function updateDisplay() {
+            const formattedMinutes = minutes.toString().padStart(2, '0');
+            const formattedSeconds = seconds.toString().padStart(2, '0');
+            const formattedCentiseconds = centiseconds.toString().padStart(2, '0');
+            minuteDisplay.textContent = `${formattedMinutes}:`;
+            secondDisplay.textContent = `${formattedSeconds}:`;
+            centisecondDisplay.textContent = `${formattedCentiseconds}`;
+        }
+
+        function startStopwatch() {
+            if (!isRunning) {
+                isRunning = true;
+                timerInterval = setInterval(() => {
+                    centiseconds++;
+                    if (centiseconds === 59) {
+                        centiseconds = 0;
+                        seconds++;
+                        if (seconds === 59) {
+                            seconds = 0;
+                            minutes++;
+                        }
+                    }
+                    updateDisplay();
+                }, 10);
+                startButton.textContent = 'Pause';
+                lapButton.classList.remove('hidden');
+                resetButton.classList.remove('hidden');
+            } else {
+                isRunning = false;
+                clearInterval(timerInterval);
+                startButton.textContent = 'Start';
+            }
+        }
+
+        function lapStopwatch() {
+            const formattedMinutes = minutes.toString().padStart(2, '0');
+            const formattedSeconds = seconds.toString().padStart(2, '0');
+            const formattedCentiseconds = centiseconds.toString().padStart(2, '0');
+            const lapTime = `${formattedMinutes}:${formattedSeconds}:${formattedCentiseconds}`;
+            const lapItem = document.createElement('li');
+            lapItem.classList.add('lap-item'); // Add class to lap item
+            lapItem.textContent = `Lap ${lapCount}: ${lapTime}`;
+            lapsList.appendChild(lapItem);
+            lapCount++;
+
+            // Scroll to the bottom of the laps list
+            lapsList.scrollTop = lapsList.scrollHeight;
+        }
+
+
+        function resetStopwatch() {
+            clearInterval(timerInterval);
+            centiseconds = 0;
+            seconds = 0;
+            minutes = 0;
+            lapCount = 1;
+            updateDisplay();
+            startButton.textContent = 'Start';
+            lapButton.classList.add('hidden');
+            resetButton.classList.add('hidden');
+            lapsList.innerHTML = '';
+            clearLapsButton.classList.add('hidden');
+        }
+
+        function clearLaps() {
+            lapsList.innerHTML = '';
+            clearLapsButton.classList.add('hidden');
+        }
+
+        startButton.addEventListener('click', startStopwatch);
+        lapButton.addEventListener('click', lapStopwatch);
+        resetButton.addEventListener('click', resetStopwatch);
+        clearLapsButton.addEventListener('click', clearLaps);
+    </script>
+
+</body>
+
+</html>

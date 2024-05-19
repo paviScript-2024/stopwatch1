@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Jersey+25&family=Lugrasimo&display=swap');
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+
+}
+
+body {
+    background-color: black;
+    font-family: "Lugrasimo", cursive;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    font-size: 16px;
+    width: 100%;
+    height: 100vh;
+
+}
+
+.outer-circle {
+        border-radius: 50%;
+        width: 250px;
+        height: 250px;
+        background: linear-gradient(45deg, #ff9900, #ff00ff, #00ff00, #00ffff, #0000ff, #ff0000, #ff9900);
+        background-size: 400% 400%;
+        animation: gradientAnimation 10s ease infinite;
+        margin-top: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+} 
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+.inner-circle {
+    border-radius: 50%;
+    width: 230px;
+    height: 230px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.text {
+    color: white;
+    font-size: 32px;
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+
+
+}
+
+.button {
+    width: 75px;
+    height: fit-content;
+    padding: 10px;
+    font-family: "Lugrasimo", cursive;
+    font-weight: bold;
+    border: 2px solid white;
+    border-radius: 10px;
+    border-color: white;
+    cursor: pointer;
+
+}
+
+.button:hover {
+    background-color: black;
+    color: white;
+}
+
+.laps {
+    list-style: none;
+    color: white;
+    width: 250px;
+    height: 250px;
+    overflow: auto;
+    position: relative;
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+.laps::-webkit-scrollbar {
+    display: none;
+}
+.lap-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid white; 
+    border-radius: 50px; 
+    margin-bottom: 10px;
+}
+
+
+
+
+.hidden{
+    visibility: hidden;
+}
